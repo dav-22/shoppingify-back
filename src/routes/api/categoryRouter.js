@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { Category } = require('../../db-config');
 
 router.get('/', async (req, res) => {
+  
     const categories = await Category.findAll();
 
     res.json(categories);

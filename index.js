@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
 const apiRouter = require('./src/routes/api'); 
 
-// require('./src/db-config');
+require('./src/db-config');
 
 const port = 3000;
 dotenv.config();
