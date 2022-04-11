@@ -10,9 +10,20 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const category = await Category.create(req.body);
- 
-    res.json(category);
+    try {
+        const category = await Category.create(req.body);
+    
+        res.json(category);
+    } catch (error) {
+
+        if(error.original.code.includes('ER_DUP_ENTRY')) {
+
+            res.status(400).send({error: 'Duplicate entry'});
+        }else {
+            res.status(400).send({error: 'Something was wrong'}); 
+        }
+    }
+        
 });
 
 router.put('/:categoryId', async (req, res) => {
