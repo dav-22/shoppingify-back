@@ -1,12 +1,17 @@
 const router = require('express').Router();
 
-const { Category } = require('../../db-config');
+const { Category, Item } = require('../../db-config');
 
 router.get('/', async (req, res) => {
-  
-    const categories = await Category.findAll();
+    try {
+        const categories = await Category.findAll({include: {model: Item, as: 'items', include: 'category'}});
 
-    res.json(categories);
+        res.json(categories);
+        
+    } catch (error) {
+        res.status(400).send({error: error});
+    }
+        
 });
 
 router.post('/', async (req, res) => {

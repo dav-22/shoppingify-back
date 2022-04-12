@@ -5,7 +5,7 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        user_id: {
+        userId: {
             type: type.INTEGER,
             allowNull: false,
             references: {
@@ -13,7 +13,7 @@ module.exports = (sequelize, type) => {
                 key: 'id'
             },
         },
-        item_id: {
+        itemId: {
             type: type.INTEGER,
             allowNull: false,
             references: {

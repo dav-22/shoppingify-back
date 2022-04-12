@@ -8,7 +8,7 @@ module.exports = (sequelize, type) => {
         name: type.STRING,
         description: type.STRING,
         image: type.STRING,
-        category_id: {
+        categoryId: {
             type: type.INTEGER,
             allowNull: false,
             references: {

@@ -22,6 +22,10 @@ const User = UserModel(sequelize, Sequelize);
 const List = ListModel(sequelize, Sequelize);
 const Shopping = ShoppingModel(sequelize, Sequelize);
 
+Item.belongsTo(Category, {as: 'category'});
+
+Category.hasMany(Item, {as: 'items'});
+
 sequelize.sync({ force: false })
     .then(() => {
         console.log('Tabla sincronizadas');
