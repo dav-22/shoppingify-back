@@ -5,19 +5,20 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        userId: {
-            type: type.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'users',
-                key: 'id'
-            },
-        },
         itemId: {
             type: type.INTEGER,
             allowNull: false,
             references: {
                 model: 'items',
+                key: 'id'
+            },
+        },
+        count: type.INTEGER,
+        listId: {
+            type: type.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'lists',
                 key: 'id'
             },
         },
