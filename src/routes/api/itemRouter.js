@@ -36,11 +36,16 @@ router.put('/:itemId', async (req, res) => {
 });
 
 router.delete('/:itemId', async (req, res) => {
-    const item = await Item.destroy({
-        where: { id: req.params.itemId }
-    });
- 
-    res.json({success: true});
+    try {
+        const item = await Item.destroy({
+            where: { id: req.params.itemId }
+        });
+    
+        res.json(true);
+    } catch (error) {
+        res.status(400).send(error); 
+
+    }
 });
 
 
