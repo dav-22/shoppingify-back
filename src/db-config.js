@@ -22,9 +22,16 @@ const User = UserModel(sequelize, Sequelize);
 const List = ListModel(sequelize, Sequelize);
 const Shopping = ShoppingModel(sequelize, Sequelize);
 
+//BEGIN RELATIONS
 Item.belongsTo(Category, {as: 'category'});
 
 Category.hasMany(Item, {as: 'items'});
+
+List.hasMany(Shopping, {as: 'shoppingLists'});
+
+Shopping.belongsTo(Item, {as: 'item'});
+//END RELATIONS
+
 
 sequelize.sync({ force: false })
     .then(() => {

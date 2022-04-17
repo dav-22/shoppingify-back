@@ -4,7 +4,10 @@ const { Category, Item } = require('../../db-config');
 
 router.get('/', async (req, res) => {
     try {
-        const categories = await Category.findAll({include: {model: Item, as: 'items', include: 'category'}});
+        const categories = await Category.findAll(
+            
+            {include: {model: Item, as: 'items', include: 'category'}}
+        );
 
         res.json(categories);
         
