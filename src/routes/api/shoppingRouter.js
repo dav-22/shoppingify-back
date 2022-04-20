@@ -20,9 +20,10 @@ router.post('/', async (req, res) => {
         let shoppingList = []; 
 
         req.body.itemList.forEach(async il => {
-            
-            const shopping = await Shopping.create({ itemId: il.item.id, count: il.count, listId: list.id });
-            shoppingList.push(shopping);
+            if(il.count > 0) {
+                const shopping = await Shopping.create({ itemId: il.item.id, count: il.count, listId: list.id });
+                shoppingList.push(shopping);
+            }
         });
     
         res.json({list: list, shopping: 'success'});
@@ -46,6 +47,7 @@ router.put('/:shoppingId', async (req, res) => {
  
     res.json({success: true , shopping: shopping});
 });
+
 
 router.delete('/:shoppingId', async (req, res) => {
     const shopping = await Shopping.destroy({

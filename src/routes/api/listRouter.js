@@ -53,5 +53,36 @@ router.delete('/:listId', async (req, res) => {
     }
 });
 
+router.put('/shoppingList/:listId', async (req, res) => {
+
+    try {
+        const list = await List.update({name: req.body.listName}, {
+            where: { id: req.params.listId }
+        })
+       
+       req.body.itemList.forEach(async il => {
+            if(il.listId == 0) {
+               if(il.count > 0) {
+                   await Shopping.create({count: il.count, itemId: il.item.id, listId: req.params.listId});
+               }
+            } else {
+                if(il.count > 0) {
+                    await Shopping.update({count: il.count}, {
+                        where: { listId: il.listId, itemId: il.item.id }
+                    });
+                } else if(il.count == 0) {
+                    await Shopping.destroy({
+                        where: { listId: il.listId, itemId: il.item.id }
+                    });
+                
+                }
+            }
+        });
+     
+        res.json(true);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
 
 module.exports = router;
