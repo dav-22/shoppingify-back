@@ -40,6 +40,39 @@ router.put('/:listId', async (req, res) => {
     res.json({success: true , List: list});
 });
 
+router.put('/complete/:listId', async (req, res) => {
+    try {
+        
+        const list = await List.update({status: 'completed'}, {
+            where: { id: req.params.listId }
+        });
+
+        req.body.list.shoppingLists.forEach(s => {
+            
+            Shopping.update({checked: s.checked}, {
+                where: {id: s.id}
+            });
+        });
+    
+        res.json(true);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+router.put('/cancel/:listId', async (req, res) => {
+    try {
+        
+        const list = await List.update({status: 'cancelled'}, {
+            where: { id: req.params.listId }
+        });
+    
+        res.json(true);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
 router.delete('/:listId', async (req, res) => {
     try {
         const list = await List.destroy({

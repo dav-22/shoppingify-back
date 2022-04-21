@@ -22,6 +22,7 @@ module.exports = (sequelize, type) => {
                 key: 'id'
             },
         },
+        checked: type.INTEGER,
         createdAt: type.DATE,
         updatedAt: type.DATE,
     
