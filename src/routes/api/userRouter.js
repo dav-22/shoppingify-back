@@ -23,15 +23,19 @@ router.post(
       }),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    try {
+      const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+      const user = await User.create(req.body);
+      res.json(user);
+    } catch (error) {
+      res.status(400).send(error);
     }
-
-    req.body.password = await bcrypt.hash(req.body.password, 10);
-    const user = await User.create(req.body);
-    res.json(user);
   }
 );
 

@@ -4,7 +4,7 @@ const { Item, Category } = require('../../db-config');
 
 router.get('/', async (req, res) => {
     try {
-        const items = await Item.findAll({include: 'category'});
+        const items = await Item.findAll({include: 'category', where: { userId: req.userId }});
 
         res.json(items);
         
